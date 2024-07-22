@@ -10,7 +10,6 @@ router.post('/ai/chat_bot/queries/resolve', async (req, res) => {
     const { text } = await req.body;
     const nameMatch = text.toLowerCase().match(/\b([a-z]+)\b/g);
     const name = nameMatch ? nameMatch[1] : null;
-    console.log("name==>", name);
     const totalMarks = nameMatch ? nameMatch[2] : null;
     let pool = await sql.connect(sqlConfig);
     try {
@@ -25,13 +24,12 @@ router.post('/ai/chat_bot/queries/resolve', async (req, res) => {
                     student_Name: name,
                     total: total_sMarks[0],
                 }
-                return res.status(200).send({ status: true, message: total_sMarks.length > 0 ? "records fetched successfully" : `${name} records are not exist`, data: single_s_Data });
+                return res.status(200).send({ status: total_sMarks[0] ? true : false, message: total_sMarks.length > 0 ? "records fetched successfully" : `${name} records are not exist`, data: single_s_Data });
             } else {
-                return res.status(200).send({ status: true, message: result.recordset.length > 0 ? "records fetched successfully" : `${name} records are not exist`, data: result.recordset });
+                return res.status(200).send({ status: result.recordset.length > 0 ? true : false, message: result.recordset.length > 0 ? "records fetched successfully" : `${name} records are not exist`, data: result.recordset });
             }
         }
     } catch (error) {
-        // console.log("error==>", error);
         return res.status(500).send({ status: false, message: "Internal Server Error" });
     }
 });
