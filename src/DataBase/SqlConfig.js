@@ -3,12 +3,18 @@ const ENV = require('../../.env');
 dotenv.config(ENV);
 
 
+const DB_USER = "npimtst";
+const DB_PASSWORD = "Abhay@1234";
+const DB_DATABASE = "TEST";
+const DB_SERVER = "172.25.7.121";
+const DB_PORT = 49172;
+
 const sqlConfig = {
-    server: process.env.DB_SERVER,
-    port: Number(process.env.DB_PORT),
-    user: process.env.DB_USER,
+    server: DB_SERVER,
+    port: DB_PORT,
+    user: DB_USER,
     password: DB_PASSWORD,
-    database: process.env.DB_DATABASE,
+    database: DB_DATABASE,
     pool: {
         max: 10,
         min: 0,

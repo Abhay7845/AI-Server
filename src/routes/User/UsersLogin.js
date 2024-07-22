@@ -6,7 +6,8 @@ const router = express.Router();
 const dotenv = require('dotenv');
 const ENV = require('../../../.env');
 dotenv.config(ENV);
-const JWT_SECRET = process.env.JWT_SECRET;
+// const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = "TheTitanAIChatBot";
 
 // USER REGISTERATION API END POINT
 router.post('/register', async (req, res) => {
