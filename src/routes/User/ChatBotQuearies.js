@@ -1,5 +1,4 @@
 const express = require("express");
-const nlp = require('compromise');
 const sql = require("mssql");
 const sqlConfig = require("../../DataBase/SqlConfig");
 const router = express.Router();
