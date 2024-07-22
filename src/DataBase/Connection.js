@@ -4,7 +4,7 @@ const sqlConfig = require('./SqlConfig')
 const DatabaseConnection = async () => {
     try {
         await sql.connect(sqlConfig);
-        console.log('Dataase Connected Successfully');
+        console.log('DataBase Connected Successfully');
         await sql.close();
     } catch (err) {
         console.error('connection error==>', err);
