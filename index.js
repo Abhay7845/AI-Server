@@ -18,6 +18,4 @@ app.use("/api/user", require("./src/routes/User/ChatBotQuearies"));
 app.use("/api/user", require("./src/routes/User/UserProfile"));
 app.use("/api/user", express.static("./upload/img"));
 
-app.listen(PORT, () => {
-    console.log(`Server is Running on PORT ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server is Running on PORT ${PORT}`));
