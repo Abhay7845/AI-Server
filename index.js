@@ -16,6 +16,7 @@ const PORT = process.env.DB_PORT || 6000;
 app.use("/api/user", require("./src/routes/User/UsersLogin"));
 app.use("/api/user", require("./src/routes/User/ChatBotQuearies"));
 app.use("/api/user", require("./src/routes/User/UserProfile"));
+app.use("/api/user", express.static("./upload/img"));
 
 app.listen(PORT, () => {
     console.log(`Server is Running on PORT ${PORT}`);

@@ -13,7 +13,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.use('/profile', express.static('./upload/img'));
 router.post('/upload/profile', upload.single('profile'), (req, res) => {
     const { file } = req;
     console.log(req.file);
@@ -22,7 +21,7 @@ router.post('/upload/profile', upload.single('profile'), (req, res) => {
     }
     try {
         if (file) {
-            res.status(200).send({ status: true, message: "file uploaded successfully", url: `http://localhost:49172/profile/${req.file.filename}` })
+            res.status(200).send({ status: true, message: "file uploaded successfully", url: `http://localhost:49172/api/user/${req.file.filename}` })
         }
     } catch (error) {
         // console.log("error==>", error);
