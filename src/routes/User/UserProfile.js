@@ -72,5 +72,37 @@ router.post('/upload/video', uploadVideo.single('video'), async (req, res) => {
     }
 })
 
+// GET UPLOADED VIDEO 
+router.get('/get/uploded/public/video', async (req, res) => {
+    try {
+        const pool = await sql.connect(sqlConfig);
+        const videos = await pool.request().query('select * from Test_Videos');
+        if (videos.recordset.length > 0) {
+            res.status(200).send({ status: true, message: "video fetched successfully", data: videos.recordset });
+        } else {
+            res.status(200).send({ status: false, message: "videos are not available", data: videos.recordset });
+        }
+    } catch (error) {
+        return res.status(500).send({ status: false, message: "Internal Server Error" });
+    }
+})
+
+
+// DELETE VIDEO 
+router.delete('/delete/public/video/:id', async (req, res) => {
+    const { id } = req.params;
+    if (isNaN(id)) {
+        return res.status(200).send({ status: false, message: "id must be in number formate" });
+    }
+    try {
+        const pool = await sql.connect(sqlConfig);
+        const deleteVdo = await pool.request().input('id', sql.Int, id).query(`DELETE FROM Test_Videos WHERE id = @id`);
+        if (deleteVdo.rowsAffected) {
+            res.status(200).send({ status: true, message: `id is '${id}' video is deleted successfully` });
+        }
+    } catch (error) {
+        return res.status(500).send({ status: false, message: "Internal Server Error" });
+    }
+})
 
 module.exports = router;
