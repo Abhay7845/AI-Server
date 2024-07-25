@@ -51,7 +51,7 @@ router.post('/upload/video', uploadVideo.single('video'), async (req, res) => {
     }
     try {
         const pool = await sql.connect(sqlConfig);
-        const v_url = `http://localhost:19317/api/user/${req.file.filename}`;
+        const v_url = `https://ai-server-c9ws.onrender.com/api/user/${req.file.filename}`;
         const v_data = await pool.request().query('select * from Test_Videos');
         const id = v_data.recordset.length + 1;
         const result = await pool.request()
