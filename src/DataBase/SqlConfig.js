@@ -2,11 +2,11 @@ const dotenv = require('dotenv');
 const ENV = require('../../.env');
 dotenv.config(ENV);
 
-// const DB_USER = "npimtst";
-// const DB_PASSWORD = "Abhay@1234";
-// const DB_DATABASE = "TEST";
-// const DB_SERVER = "172.25.7.121";
-// const DB_PORT = 49172;
+const DB_USER = "npimtst";
+const DB_PASSWORD = "Abhay@1234";
+const DB_DATABASE = "TEST";
+const DB_SERVER = "172.25.7.121";
+const DB_PORT = 49172;
 
 // DB_USER = "Test_Admin"
 // DB_PASSWORD = "Test_Admin@1234"
