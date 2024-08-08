@@ -2,17 +2,17 @@ const dotenv = require('dotenv');
 const ENV = require('../../.env');
 dotenv.config(ENV);
 
-// const DB_USER = "npimtst";
-// const DB_PASSWORD = "Abhay@1234";
-// const DB_DATABASE = "TEST";
-// const DB_SERVER = "172.25.7.121";
-// const DB_PORT = 49172;
+//  DB_USER = "npimtst";
+//  DB_PASSWORD = "Abhay@1234";
+//  DB_DATABASE = "TEST";
+//  DB_SERVER = "172.25.7.121";
+//  DB_PORT = 49172;
 
 // DB_USER = "Test_Admin"
 // DB_PASSWORD = "Test_Admin@1234"
 // DB_DATABASE = "Test_Aryan_01"
-// DB_SERVER = "108.181.197.190"
-// DB_PORT = 19317
+// DB_SERVER = "108.181.197.184"
+// DB_PORT = 10073
 // JWT_SECRET = "TheTitanAIChatBot"
 
 const sqlConfig = {
