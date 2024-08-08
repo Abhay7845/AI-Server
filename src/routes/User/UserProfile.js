@@ -32,7 +32,6 @@ router.post('/upload/profile', uploadImg.single('profile'), (req, res) => {
 });
 
 
-
 // UPLOAD VIDEO FORMATE
 
 const VideoStorage = multer.diskStorage({
