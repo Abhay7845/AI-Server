@@ -80,9 +80,7 @@ router.post('/insert/students/marks/details', async (req, res) => {
         }
     }
     if (emptyFields.length > 0) {
-        return res.status(200).send({
-            code: false, message: `Please Enter ${emptyFields} Marks`
-        });
+        return res.status(200).send({ code: false, message: `Please Enter ${emptyFields} Marks` });
     }
 
     try {
