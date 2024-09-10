@@ -14,16 +14,16 @@ const JWT_SECRET = "TheTitanAIChatBot";
 router.post('/register', async (req, res) => {
     const { email, password } = req.body;
     if (!email) {
-        return res.status(200).send({ status: false, message: "Email is required" });
+        return res.status(200).send({ code: 1001, message: "Email is required" });
     } else if (!password) {
-        return res.status(200).send({ status: false, message: "Password is required" });
+        return res.status(200).send({ code: 1001, message: "Password is required" });
     }
     try {
         const pool = await sql.connect(sqlConfig);
         // Check if the user already exists
         const userCheck = await pool.request().input('email', sql.VarChar, email).query('SELECT * FROM RegisterUser WHERE email = @email');
         if (userCheck.recordset.length > 0) {
-            return res.status(200).send({ status: false, message: "Sorry user already registered with us" });
+            return res.status(200).send({ code: 1002, message: "Sorry user already registered with us" });
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -32,11 +32,11 @@ router.post('/register', async (req, res) => {
         // Insert the new user into the database
         let result = await pool.request().input('email', sql.VarChar, email).input('password', sql.VarChar, hashedPassword).query('INSERT INTO RegisterUser (email, password) VALUES (@email, @password)');
         const userData = { ...data, ...{ token: token, info: result.output } }
-        res.status(200).send({ status: true, message: "User registered successfully", user: userData });
+        res.status(200).send({ code: 1000, message: "User registered successfully", user: userData });
         pool.close();
     } catch (error) {
         // console.log("error==>", error);
-        return res.status(500).send({ status: false, message: "Internal Server Error" });
+        return res.status(500).send({ code: 5000, message: "Internal Server Error" });
     }
 });
 
@@ -45,27 +45,27 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = await req.body;
     if (!email) {
-        return res.status(200).send({ status: false, message: "Email is required" });
+        return res.status(200).send({ code: 1001, message: "Email is required" });
     } else if (!password) {
-        return res.status(200).send({ status: false, message: "Password is required" });
+        return res.status(200).send({ code: 1001, message: "Password is required" });
     }
     try {
         const pool = await sql.connect(sqlConfig);
         const result = await pool.request().query(`SELECT * FROM RegisterUser WHERE email = '${email}'`);
         if (result.recordset.length === 0) {
-            return res.status(200).send({ status: false, message: "User not registred with us" });
+            return res.status(200).send({ code: 1002, message: "User not registred with us" });
         }
         const user = result.recordset[0];
         const isMatchPwd = await bcrypt.compare(password, user.password);
         if (!isMatchPwd) {
-            return res.status(200).send({ status: false, message: "Incorrect password" });
+            return res.status(200).send({ code: 1003, message: "Incorrect password" });
         }
         const token = jwt.sign(user, JWT_SECRET, { expiresIn: '1h' });
         const userData = { ...user, ...{ token: token } }
-        res.status(200).send({ status: true, message: 'login successfully', user: userData });
+        res.status(200).send({ code: 1000, message: 'login successfully', user: userData });
     } catch (error) {
         // console.log("error==>", error);
-        return res.status(500).send({ status: false, message: "Internal Server Error" });
+        return res.status(500).send({ code: 5000, message: "Internal Server Error" });
     }
 })
 
@@ -80,7 +80,7 @@ router.post('/insert/students/marks/details', async (req, res) => {
         }
     }
     if (emptyFields.length > 0) {
-        return res.status(200).send({ code: false, message: `Please Enter ${emptyFields} Marks` });
+        return res.status(200).send({ code: 1001, message: `Please Enter ${emptyFields} Marks` });
     }
 
     try {
@@ -108,10 +108,10 @@ router.post('/insert/students/marks/details', async (req, res) => {
             Percentage: Percentage
         }
         if (result.rowsAffected) {
-            res.status(200).send({ status: true, message: "Student Details Inserted Successfully", data: StudenstsData, result: result.output });
+            res.status(200).send({ code: 1000, message: "Student Details Inserted Successfully", data: StudenstsData, result: result.output });
         }
     } catch (error) {
-        return res.status(500).send({ status: false, message: "Internal Server Error" });
+        return res.status(500).send({ code: 5000, message: "Internal Server Error" });
     }
 })
 
